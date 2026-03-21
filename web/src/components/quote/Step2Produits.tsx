@@ -2,11 +2,9 @@ import { useRef, useState } from "react";
 import { FiPlus, FiSearch, FiChevronUp, FiChevronDown, FiTrash2 } from "react-icons/fi";
 import { useQuoteForm } from "@/src/context/QuoteFormContext";
 import { Product } from "@/src/types/product";
-import { QuoteItem } from "@/src/types/product";
 import { categoriesMock } from "@/src/mocks";
 import Input from "@/src/components/ui/Input";
 import ModalNouveauProduit from "./ModalNouveauProduit";
-
 
 export default function Step2products() {
   const { state, dispatch } = useQuoteForm();
@@ -25,11 +23,11 @@ export default function Step2products() {
   };
 
   const handleAddProduit = (produit: Product) => {
-    const newProduit: QuoteItem = {
+    const newProduit: Product = {
       id: `${produit.id}-${produitIdSeq.current++}`,
       name: produit.name,
       quantity: 1,
-      unitPrice: produit.price,
+      unitPrice: produit.unitPrice,
       vat: 20,
     };
 
@@ -46,7 +44,7 @@ export default function Step2products() {
     .filter((cat) => cat.products.length > 0);
 
   const total = products.reduce(
-    (acc: number, p: QuoteItem) => acc + p.unitPrice * p.quantity * (1 + p.vat / 100), 0
+    (acc: number, p: Product) => acc + p.unitPrice * (p.quantity  || 1) * (1 + p.vat / 100), 0
   );
 
   return (
@@ -110,7 +108,7 @@ export default function Step2products() {
                           <div>
                             <p className="text-sm text-black-400">{product.name}</p>
                             <p className="text-sm font-bold text-black-500">
-                              {product.price} €
+                              {product.unitPrice} €
                             </p>
                           </div>
                           <button
@@ -129,7 +127,6 @@ export default function Step2products() {
           </div>
         </div>
 
-
         <div className="bg-white rounded-xl border border-gray-100 p-5">
           <h2 className="text-sm font-bold text-black-500 mb-4">
             products sélectionnés
@@ -139,8 +136,8 @@ export default function Step2products() {
             <p className="text-sm text-black-200">Aucun produit sélectionné</p>
           ) : (
             <div className="flex flex-col gap-4">
-              {products.map((p: QuoteItem) => {
-                const totalLigne = p.unitPrice * p.quantity * (1 + p.vat / 100);
+              {products.map((p: Product) => {
+                const totalLigne = p.unitPrice * (p.quantity || 1) * (1 + p.vat / 100);
                 return (
                   <div key={p.id}>
                     <div className="flex justify-between items-center mb-2">
@@ -159,7 +156,7 @@ export default function Step2products() {
                     </div>
 
                     <div className="grid grid-cols-3 gap-2 mb-2">
-                      <Input placeholder="" type="number" value={p.quantity}
+                      <Input placeholder="" type="number" value={p.quantity || 1}
                         onChange={(e) => dispatch({ type: "UPDATE_PRODUIT", payload: { id: p.id, changes: { quantity: Number(e.target.value) } } })} />
                       <Input placeholder="" type="number" value={p.unitPrice}
                         onChange={(e) => dispatch({ type: "UPDATE_PRODUIT", payload: { id: p.id, changes: { unitPrice: Number(e.target.value) } } })} />

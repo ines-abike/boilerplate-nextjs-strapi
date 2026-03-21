@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { FiX } from "react-icons/fi";
 import { useQuoteForm } from "@/src/context/QuoteFormContext";
-import { QuoteItem } from "@/src/types/product";
+import { Product } from "@/src/types/product";
 import Input from "@/src/components/ui/Input";
 
 interface Props {
@@ -18,7 +18,7 @@ export default function ModalNouveauProduit({ isOpen, onClose }: Props) {
 
   const handleCreer = () => {
     if (!nomProduit.trim()) return;
-    const newProduit: QuoteItem = {
+    const newProduit: Product = {
       id: `custom-${customProduitIdSeq.current++}`,
       name: nomProduit,
       quantity: 1,

@@ -7,10 +7,10 @@ const QuoteTemplate = forwardRef<HTMLDivElement, Quote>(
   ({ clientInfo, products, reference, createdAt }, ref) => {
 
     const sousTotal = products.reduce(
-      (acc, p) => acc + p.unitPrice * p.quantity, 0
+      (acc, p) => acc + p.unitPrice *  (p.quantity || 1), 0
     );
     const totalVat = products.reduce(
-      (acc, p) => acc + p.unitPrice * p.quantity * (p.vat / 100), 0
+      (acc, p) => acc + p.unitPrice * (p.quantity || 1) * (p.vat / 100), 0
     );
     const totalTTC = sousTotal + totalVat;
 
@@ -75,7 +75,7 @@ const QuoteTemplate = forwardRef<HTMLDivElement, Quote>(
           </div>
 
           {products.map((p) => {
-            const totalLigne = p.unitPrice * p.quantity * (1 + p.vat / 100);
+            const totalLigne = p.unitPrice * (p.quantity || 1) * (1 + p.vat / 100);
             return (
               <div
                 key={p.id}

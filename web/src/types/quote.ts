@@ -1,20 +1,5 @@
-import { QuoteItem } from "./product";
+import { Product } from "./product";
 
-export interface Quote {
-  id: string;
-  reference: string;
-  createdAt: string;
-  clientInfo: ClientInfo;
-  products: QuoteItem[];
-}
-
-export interface QuoteFormState {
-  step: number;
-  clientInfo: ClientInfo;
-  products: QuoteItem[];
-  reference: string;
-  date: string;
-}
 
 export type ClientType = "particulier" | "entreprise";
 
@@ -29,4 +14,16 @@ export interface ClientInfo {
   siretNumber: string;
   address: string;
   eventName: string;
+}
+
+export interface Quote {
+  id: string;
+  reference: string;
+  createdAt: string;
+  clientInfo: ClientInfo;
+  products: Product[];
+}
+
+export interface QuoteFormState extends Quote {
+  step: number;
 }

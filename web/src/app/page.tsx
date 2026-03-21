@@ -110,7 +110,7 @@ export default function HomePage() {
                 <div className="flex items-center gap-4">
                   <div className="text-left">
                     <p className="text-xl font-bold">
-                      {formatMontant(q.products.reduce((acc, product) => acc + product.unitPrice * product.quantity, 0))}
+                      {formatMontant(q.products.reduce((acc, product) => acc + product.unitPrice * (product.quantity || 1), 0))}
                     </p>
                     <p className="text-xs text-black-200">{q.createdAt}</p>
                   </div>

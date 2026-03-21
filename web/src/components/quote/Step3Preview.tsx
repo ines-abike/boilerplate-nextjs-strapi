@@ -33,7 +33,7 @@ export default function Step3Preview() {
             clientInfo={state.clientInfo}
             products={state.products}
             reference={state.reference}
-            createdAt={state.date}
+            createdAt={state.createdAt}
           />
         </div>
       </div>

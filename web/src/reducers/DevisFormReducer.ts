@@ -1,4 +1,4 @@
-import { QuoteItem } from "../types/product";
+import { Product } from "../types/product";
 import { ClientInfo, QuoteFormState } from "../types/quote";
  
 const defaultClientInfo: ClientInfo = {
@@ -16,33 +16,36 @@ const defaultClientInfo: ClientInfo = {
  
 function createReferenceAndDate() {
   const now = new Date();
-  const date = now.toLocaleDateString("fr-FR", {
+  const createdAt = now.toLocaleDateString("fr-FR", {
     weekday: "long",
     day: "numeric",
     month: "long",
     year: "numeric",
   });
   const reference = `DEV-${now.getFullYear()}-${String(Math.floor(Math.random() * 900) + 100).padStart(3, "0")}`;
- 
-  return { reference, date };
+
+  const id = reference;
+
+  return { id, reference, createdAt };
 }
- 
-const { reference, date } = createReferenceAndDate();
- 
+
+const { id, reference, createdAt } = createReferenceAndDate();
+
 export const initialState: QuoteFormState = {
   step: 1,
+  id,
   clientInfo: defaultClientInfo,
   products: [],
   reference,
-  date,
+  createdAt,
 };
- 
+
 export type Action =
   | { type: "SET_STEP"; payload: number }
   | { type: "SET_CLIENT_INFO"; payload: Partial<ClientInfo> }
-  | { type: "ADD_PRODUIT"; payload: QuoteItem }
+  | { type: "ADD_PRODUIT"; payload: Product }
   | { type: "REMOVE_PRODUIT"; payload: string }
-  | { type: "UPDATE_PRODUIT"; payload: { id: string; changes: Partial<QuoteItem> } }
+  | { type: "UPDATE_PRODUIT"; payload: { id: string; changes: Partial<Product> } }
   | { type: "RESET" };
  
 export function devisFormReducer(state: QuoteFormState, action: Action): QuoteFormState {
@@ -62,13 +65,13 @@ export function devisFormReducer(state: QuoteFormState, action: Action): QuoteFo
     case "REMOVE_PRODUIT":
       return {
         ...state,
-        products: state.products.filter((p: QuoteItem) => p.id !== action.payload),
+        products: state.products.filter((p: Product) => p.id !== action.payload),
       };
  
     case "UPDATE_PRODUIT":
       return {
         ...state,
-        products: state.products.map((p: QuoteItem) =>
+        products: state.products.map((p: Product) =>
           p.id === action.payload.id
             ? { ...p, ...action.payload.changes }
             : p
