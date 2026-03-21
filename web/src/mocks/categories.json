@@ -1,0 +1,28 @@
+[
+  {
+    "id": "champagnes",
+    "name": "Champagnes",
+    "products": [
+      { "id": "c1", "name": "Charles Heidsieck brut réserve", "price": 54, "category": "Champagnes" },
+      { "id": "c2", "name": "Charles Heidsieck brut réserve", "price": 54, "category": "Champagnes" },
+      { "id": "c3", "name": "Charles Heidsieck brut réserve", "price": 54, "category": "Champagnes" },
+      { "id": "c4", "name": "Charles Heidsieck brut réserve", "price": 54, "category": "Champagnes" }
+    ]
+  },
+  {
+    "id": "cocktails",
+    "name": "Cocktails signatures",
+    "products": [
+      { "id": "ck1", "name": "Mojito signature", "price": 18, "category": "Cocktails signatures" },
+      { "id": "ck2", "name": "Spritz L'Heritage", "price": 16, "category": "Cocktails signatures" }
+    ]
+  },
+  {
+    "id": "cognac",
+    "name": "Cognac et Armagnac",
+    "products": [
+      { "id": "co1", "name": "Hennessy XO", "price": 45, "category": "Cognac et Armagnac" },
+      { "id": "co2", "name": "Rémy Martin VSOP", "price": 32, "category": "Cognac et Armagnac" }
+    ]
+  }
+]
