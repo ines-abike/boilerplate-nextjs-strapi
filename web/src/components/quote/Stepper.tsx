@@ -8,7 +8,7 @@ export default function Stepper({ currentStep }: { currentStep: number }) {
   return (
     <div>
       {/* Progress bar */}
-      <div className="w-full h-[3px] bg-gray-100 rounded-full mb-4">
+      <div className="w-full h-1.5 bg-gray-100 rounded-full mb-4">
         <div
           className="h-full bg-primary-500 rounded-full transition-all duration-300"
           style={{
@@ -20,7 +20,7 @@ export default function Stepper({ currentStep }: { currentStep: number }) {
       </div>
 
       {/* Steps */}
-      <div className="flex justify-between">
+      <div className="flex sm:flex-row flex-col gap-4 justify-between">
         {steps.map((step) => {
           const isActive = step.number === currentStep;
           const isDone = step.number < currentStep;
@@ -28,17 +28,13 @@ export default function Stepper({ currentStep }: { currentStep: number }) {
             <div key={step.number} className="flex items-center gap-2">
               <div
                 className={`w-5 h-5 rounded-full flex items-center justify-center
-                  ${isActive || isDone ? "bg-primary-500" : "bg-black-100"}`}
+                  ${isActive || isDone ? "bg-black-500" : "bg-black-100"}`}
               >
-                <span className="text-[10px] text-white font-bold">
+                <span className="text-sm text-white font-bold">
                   {step.number}
                 </span>
               </div>
-              <span className={`text-xs
-                ${isActive ? "font-semibold text-black-500" : ""}
-                ${isDone ? "text-black-500" : ""}
-                ${!isActive && !isDone ? "text-black-200" : ""}`}
-              >
+              <span className="text-base">
                 {step.label}
               </span>
             </div>

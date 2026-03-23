@@ -53,13 +53,13 @@ export default function Step3Preview() {
 
   return (
     <div className="bg-white rounded-xl border border-gray-100 p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-sm font-bold text-black-500">
+      <div className="flex justify-between items-center mb-6 gap-4">
+        <h2 className="text-base font-playfair font-bold">
           Prévisualisation du devis
         </h2>
         <div className="flex flex-col items-end gap-2">
-          <Button onClick={handleSaveAndDownload} disabled={loading}>
-            {loading ? "Enregistrement..." : "Enregistrer et télécharger"}
+          <Button className="text-nowrap" onClick={handleSaveAndDownload} disabled={loading}>
+            {loading ? "Téléchargement..." : "Télécharger le devis"}
           </Button>
           {error && <p className="text-xs text-red-500">{error}</p>}
         </div>

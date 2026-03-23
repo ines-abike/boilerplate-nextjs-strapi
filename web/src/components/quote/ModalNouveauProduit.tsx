@@ -38,7 +38,7 @@ export default function ModalNouveauProduit({ isOpen, onClose }: Props) {
         <DialogPanel className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
 
           <div className="flex justify-between items-start mb-1">
-            <DialogTitle className="text-sm font-bold text-black-500">
+            <DialogTitle className="text-sm font-bold">
               Ajouter un nouveau produit
             </DialogTitle>
             <button onClick={onClose} className="text-black-200 hover:text-black-400 transition-colors">

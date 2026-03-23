@@ -16,7 +16,7 @@ export default function ModalFermeture({ isOpen, onConfirm, onCancel }: Props) {
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel className="bg-white rounded-xl shadow-xl w-full max-w-sm p-6">
 
-          <DialogTitle className="text-sm font-bold text-black-500 mb-2">
+          <DialogTitle className="text-sm font-bold mb-2">
             Êtes-vous sûr de vouloir partir ?
           </DialogTitle>
 

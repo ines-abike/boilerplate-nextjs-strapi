@@ -21,19 +21,15 @@ export default function NouveauQuoteContent() {
     router.push("/");
   };
   return (
-    <div className="mx-auto py-12 px-25">
+    <div className="mx-auto py-12 px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32">
       <Link href="/">
-      <button
-        className="flex items-center gap-2 text-sm text-black-300 hover:text-black-500 mb-5 transition-colors"
-      >
-        <FiArrowLeft size={16} />
-        Retour au dashboard
-      </button>
+        <button className="flex items-center gap-2 text-base mb-5 transition-colors">
+          <FiArrowLeft size={16} />
+          Retour au dashboard
+        </button>
       </Link>
       <div className="bg-white rounded-xl border border-gray-100 p-6 mb-4">
-        <h1 className="font-serif text-xl font-bold text-black-500 mb-4">
-          Nouveau devis
-        </h1>
+        <h1 className="font-serif text-2xl font-bold mb-4">Nouveau devis</h1>
         <Stepper currentStep={state.step} />
       </div>
       <div>
@@ -46,16 +42,22 @@ export default function NouveauQuoteContent() {
         {state.step > 1 && (
           <Button
             onClick={() => dispatch({ type: "SET_STEP", payload: 1 })}
-            className="border border-gray-100 text-black-400 text-sm px-6 py-2 rounded-md hover:bg-gray-50 transition-colors"
+            variant="secondary"
           >
             Précédent
           </Button>
         )}
 
-        {state.step < 3 && (
+        {state.step > 1 && state.step < 3 && (
           <Button
             onClick={() =>
               dispatch({ type: "SET_STEP", payload: state.step + 1 })
+            }
+            disabled={state.products.length === 0}
+            className={
+              state.products.length === 0
+                ? "opacity-50 cursor-not-allowed"
+                : ""
             }
           >
             Suivant

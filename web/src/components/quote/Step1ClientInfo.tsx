@@ -1,40 +1,83 @@
+import { useEffect } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuoteForm } from "@/src/context/QuoteFormContext";
 import { ClientType } from "@/src/types/quote";
+import { QuoteFormState } from "@/src/types/quote";
 import Input from "@/src/components/ui/Input";
+import {
+  clientInfoSchema,
+  ClientInfoFormValues,
+} from "@/src/schemas/clientInfo.schema";
+import Button from "@/src/components/ui/Button";
 
 export default function Step1ClientInfo() {
   const { state, dispatch } = useQuoteForm();
-  const isEntreprise = state.clientType === "entreprise";
 
-  const setField = (payload: Partial<typeof state>) => {
-    dispatch({ type: "SET_CLIENT_INFO", payload });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors },
+  } = useForm<ClientInfoFormValues>({
+    resolver: zodResolver(clientInfoSchema),
+    defaultValues: {
+      clientType: state.clientType ?? "particulier",
+      lastName: state.lastName ?? "",
+      firstName: state.firstName ?? "",
+      phone: state.phone ?? "",
+      email: state.email ?? "",
+      address: state.address ?? "",
+      eventName: state.eventName ?? "",
+      companyName: state.companyName ?? "",
+      vatNumber: state.vatNumber ?? "",
+      siretNumber: state.siretNumber ?? "",
+    },
+  });
+
+  const clientType = useWatch({ control, name: "clientType" });
+  const isEntreprise = clientType === "entreprise";
+
+  const values = useWatch({ control });
+
+  useEffect(() => {
+    dispatch({
+      type: "SET_CLIENT_INFO",
+      payload: values as Partial<QuoteFormState>,
+    });
+  }, [values, dispatch]);
+
+  const onSubmit = () => {
+    dispatch({ type: "SET_STEP", payload: 2 });
   };
 
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className="bg-white rounded-xl border border-gray-100 p-6">
-        <h2 className="text-sm font-bold text-black-500 mb-4">
+        <h2 className="text-xl font-bold font-playfair mb-4">
           Informations du client
         </h2>
 
         {/* Type client */}
-        <p className="text-sm text-black-300 mb-2">Type de client</p>
+        <p className="text-base mb-2">Type de client</p>
         <div className="flex gap-6 mb-5">
           {(["particulier", "entreprise"] as ClientType[]).map((type) => (
             <button
+              type="button"
               key={type}
-              onClick={() => setField({ clientType: type })}
+              onClick={() => setValue("clientType", type)}
               className="flex items-center gap-2"
             >
               <div
                 className={`w-4 h-4 rounded-full border-2 flex items-center justify-center
-                  ${state.clientType === type ? "border-primary-500" : "border-black-100"}`}
+                  ${clientType === type ? "border-primary-500" : "border-black-100"}`}
               >
-                {state.clientType === type && (
+                {clientType === type && (
                   <div className="w-2 h-2 rounded-full bg-primary-500" />
                 )}
               </div>
-              <span className="text-sm text-black-400 capitalize">{type}</span>
+              <span className="text-base capitalize">{type}</span>
             </button>
           ))}
         </div>
@@ -44,14 +87,14 @@ export default function Step1ClientInfo() {
           <Input
             type="text"
             placeholder="Nom du client"
-            value={state.lastName}
-            onChange={(e) => setField({ lastName: e.target.value })}
+            error={errors.lastName?.message}
+            {...register("lastName")}
           />
           <Input
             type="text"
             placeholder="Prénom du client"
-            value={state.firstName}
-            onChange={(e) => setField({ firstName: e.target.value })}
+            error={errors.firstName?.message}
+            {...register("firstName")}
           />
         </div>
 
@@ -60,14 +103,14 @@ export default function Step1ClientInfo() {
           <Input
             type="tel"
             placeholder="Numéro de téléphone"
-            value={state.phone}
-            onChange={(e) => setField({ phone: e.target.value })}
+            error={errors.phone?.message}
+            {...register("phone")}
           />
           <Input
-            placeholder="Email"
             type="email"
-            value={state.email}
-            onChange={(e) => setField({ email: e.target.value })}
+            placeholder="Email"
+            error={errors.email?.message}
+            {...register("email")}
           />
         </div>
 
@@ -78,22 +121,22 @@ export default function Step1ClientInfo() {
               <Input
                 type="text"
                 placeholder="Nom de l'entreprise"
-                value={state.companyName}
-                onChange={(e) => setField({ companyName: e.target.value })}
+                error={errors.companyName?.message}
+                {...register("companyName")}
               />
               <Input
                 type="text"
                 placeholder="N° TVA Intracommunautaire"
-                value={state.vatNumber}
-                onChange={(e) => setField({ vatNumber: e.target.value })}
+                error={errors.vatNumber?.message}
+                {...register("vatNumber")}
               />
             </div>
             <div className="mb-3">
               <Input
                 type="text"
                 placeholder="Numéro siret"
-                value={state.siretNumber}
-                onChange={(e) => setField({ siretNumber: e.target.value })}
+                error={errors.siretNumber?.message}
+                {...register("siretNumber")}
               />
             </div>
           </>
@@ -104,21 +147,33 @@ export default function Step1ClientInfo() {
           <textarea
             placeholder="Adresse"
             rows={3}
-            value={state.address}
-            onChange={(e) => setField({ address: e.target.value })}
-            className="w-full px-3 py-2 text-sm border border-gray-100 rounded-md text-black-400 placeholder:text-black-200 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-shadow resize-none"
+            {...register("address")}
+            className={`
+              w-full px-3 py-2 text-base border-2 rounded-xl
+             text-black-[#34160E] outline-none
+              transition-shadow resize-none border-[#E6E6E6]
+            `}
           />
+          {errors.address && (
+            <p className="text-xs text-red-500 mt-1">
+              {errors.address.message}
+            </p>
+          )}
         </div>
 
         {/* Événement */}
-        <h2 className="text-sm font-bold text-black-500 mb-3">Événement</h2>
+        <h2 className="text-xl font-playfair mb-3">Événement</h2>
         <Input
           type="text"
           placeholder="Nom de l'événement"
-          value={state.eventName}
-          onChange={(e) => setField({ eventName: e.target.value })}
+          error={errors.eventName?.message}
+          {...register("eventName")}
         />
       </div>
-    </>
+
+      <div className="flex justify-end mt-4">
+        <Button type="submit">Suivant</Button>
+      </div>
+    </form>
   );
 }

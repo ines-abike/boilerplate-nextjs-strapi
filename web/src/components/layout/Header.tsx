@@ -10,9 +10,7 @@ export default function Header() {
 
       <Menu as="div" className="relative">
         <MenuButton className="flex items-center gap-2 cursor-pointer">
-          <div className="w-8 h-8 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-xs text-black-300 font-medium">
-            R
-          </div>
+         <Image src="/images/avatar.png" alt="User" width={32} height={32} />
           <span className="text-xs text-black-300">
             reservation@lheritage105.com
           </span>
@@ -33,7 +31,7 @@ export default function Header() {
           <MenuItem
             as="button"
             className={({ active }) =>
-              `flex items-center gap-2 w-full px-4 py-2 text-sm text-black-400 ${active ? "bg-gray-50" : ""}`
+              `flex items-center text-nowrap gap-2 w-full px-4 py-2 text-sm text-black-400 ${active ? "bg-gray-50" : ""}`
             }
           >
             <FiKey size={14} />
