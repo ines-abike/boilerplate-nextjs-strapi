@@ -5,7 +5,11 @@ import { useQuoteForm } from "@/src/context/QuoteFormContext";
 import { ClientType } from "@/src/types/quote";
 import { QuoteFormState } from "@/src/types/quote";
 import Input from "@/src/components/ui/Input";
-import { clientInfoSchema, ClientInfoFormValues } from "@/src/schemas/clientInfo.schema";
+import {
+  clientInfoSchema,
+  ClientInfoFormValues,
+} from "@/src/schemas/clientInfo.schema";
+import Button from "@/src/components/ui/Button";
 
 export default function Step1ClientInfo() {
   const { state, dispatch } = useQuoteForm();
@@ -51,12 +55,12 @@ export default function Step1ClientInfo() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className="bg-white rounded-xl border border-gray-100 p-6">
-        <h2 className="text-sm font-bold text-black-500 mb-4">
+        <h2 className="text-xl font-bold font-playfair mb-4">
           Informations du client
         </h2>
 
         {/* Type client */}
-        <p className="text-sm text-black-300 mb-2">Type de client</p>
+        <p className="text-base mb-2">Type de client</p>
         <div className="flex gap-6 mb-5">
           {(["particulier", "entreprise"] as ClientType[]).map((type) => (
             <button
@@ -73,7 +77,7 @@ export default function Step1ClientInfo() {
                   <div className="w-2 h-2 rounded-full bg-primary-500" />
                 )}
               </div>
-              <span className="text-sm text-black-400 capitalize">{type}</span>
+              <span className="text-base capitalize">{type}</span>
             </button>
           ))}
         </div>
@@ -145,20 +149,20 @@ export default function Step1ClientInfo() {
             rows={3}
             {...register("address")}
             className={`
-              w-full px-3 py-2 text-sm border rounded-md
-              text-black-400 placeholder:text-black-200
-              focus:outline-none focus:ring-1 focus:ring-primary-500
-              transition-shadow resize-none
-              ${errors.address ? "border-red-400" : "border-gray-100"}
+              w-full px-3 py-2 text-base border-2 rounded-xl
+             text-black-[#34160E] outline-none
+              transition-shadow resize-none border-[#E6E6E6]
             `}
           />
           {errors.address && (
-            <p className="text-xs text-red-500 mt-1">{errors.address.message}</p>
+            <p className="text-xs text-red-500 mt-1">
+              {errors.address.message}
+            </p>
           )}
         </div>
 
         {/* Événement */}
-        <h2 className="text-sm font-bold text-black-500 mb-3">Événement</h2>
+        <h2 className="text-xl font-playfair mb-3">Événement</h2>
         <Input
           type="text"
           placeholder="Nom de l'événement"
@@ -167,14 +171,8 @@ export default function Step1ClientInfo() {
         />
       </div>
 
-      {/* Bouton Suivant — déclenche la validation */}
       <div className="flex justify-end mt-4">
-        <button
-          type="submit"
-          className="bg-primary-500 hover:bg-primary-600 text-white text-sm px-8 py-2 rounded-md transition-colors"
-        >
-          Suivant
-        </button>
+        <Button type="submit">Suivant</Button>
       </div>
     </form>
   );

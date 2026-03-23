@@ -10,7 +10,7 @@ export default async function HomePage() {
     <div className="max-w-2xl mx-auto py-12">
       {/* Hero */}
       <div className="text-center mb-8">
-        <h1 className="font- text-4xl font-bold text-black-500 mb-2">
+        <h1 className="font-playfair md:text-4xl text-2xl font-bold mb-2">
           Générez votre nouveau devis
         </h1>
         <p className="text-base mb-5">Générez votre nouveau devis</p>
@@ -20,7 +20,7 @@ export default async function HomePage() {
       </div>
 
       {/* Compteur */}
-      <p className="text-center text-xl font-semibold mb-6">
+      <p className="text-center md:text-xl text-lg font-semibold mb-6">
         Vous avez généré{" "}
        <span className="text-secondary-500 font-semibold">
           {meta.pagination?.total ?? 0} devis

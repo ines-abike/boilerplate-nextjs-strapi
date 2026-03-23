@@ -9,7 +9,7 @@ function createReferenceAndDate() {
     month: "long",
     year: "numeric",
   });
-  const reference = `DEV-${now.getFullYear()}-${String(Math.floor(Math.random() * 900) + 100).padStart(3, "0")}`;
+  const reference = `DEV-${now.getFullYear()}-0${now.getMonth() + 1}-${String(Math.floor(Math.random() * 900) + 100).padStart(3, "0")}`;
 
   const id = reference;
 

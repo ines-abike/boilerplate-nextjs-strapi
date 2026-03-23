@@ -27,7 +27,7 @@ export default function ModalQuoteDetail({ quote, onClose }: Props) {
         <DialogPanel className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl">
 
           <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100">
-            <p className="text-sm font-bold text-black-500">
+            <p className="text-sm font-bold">
               {quote?.reference} — {quote?.eventName}
             </p>
             <div className="flex items-center gap-3">

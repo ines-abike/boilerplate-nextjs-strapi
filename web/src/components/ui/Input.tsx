@@ -11,14 +11,14 @@ export default function Input({ label, error, className = "", ...props }: InputP
       {label && (
         <label className="text-xs text-black-300 font-medium">{label}</label>
       )}
+      {/* Foundation /BlackColor/blackcolor-50 */}
       <input
         className={`
-          w-full px-3 py-2 text-sm
-          border rounded-md
-          text-black-400 placeholder:text-black-200
-          focus:outline-none focus:ring-1 focus:ring-primary-500
-          transition-shadow
-          ${error ? "border-red-400" : "border-gray-100"}
+          w-full px-4 py-3 text-sm
+          border-2 rounded-xl 
+          text-black-[#34160E]
+          outline-none
+          transition-shadow border-[#E6E6E6]
           ${className}
         `}
         {...props}

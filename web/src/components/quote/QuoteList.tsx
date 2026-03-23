@@ -69,15 +69,15 @@ export default function QuoteListClient({ initialQuotes, totalQuotes }: Props) {
     new Date(dateStr).toLocaleDateString("fr-FR");
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="font-bold text-2xl text-black-500">Récemment générés</h2>
-      <div className="relative py-2 px-4 rounded-lg bg-white">
+    <div className="flex flex-col gap-4 p-6">
+      <h2 className="font-bold text-2xl font-playfair">Récemment générés</h2>
+      <div className="relative text-black-500 py-2 px-4 rounded-lg bg-white">
         <input
           type="text"
           placeholder="Rechercher un devis"
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
-          className={`outline-none ${isPending ? "opacity-50" : ""}`}
+          className={`outline-none placeholder-black-400 ${isPending ? "opacity-50" : ""}`}
         />
       </div>
       {/* Template caché pour le PDF */}
@@ -100,17 +100,16 @@ export default function QuoteListClient({ initialQuotes, totalQuotes }: Props) {
               className="bg-white border-2 border-gray-100 rounded-xl px-4 py-3 flex items-center justify-between"
             >
               <div className="flex flex-col gap-1.5">
-                <p className="text-base font-bold text-black-500">{q.reference}</p>
+                <p className="text-base font-bold">{q.reference}</p>
                 <p className="text-xs">{q.firstName} {q.lastName}</p>
                 <p className="text-xs">{q.eventName}</p>
               </div>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-5">
                 <div className="text-left">
                   <p className="text-xl font-bold">{formatMontant(q)}</p>
                   <p className="text-xs text-black-200">{formatDate(q.createdAt)}</p>
                 </div>
-                <div className="flex items-center gap-2">
                   <FiEye
                     size={16}
                     className="text-primary-500 cursor-pointer hover:text-primary-600"
@@ -121,7 +120,6 @@ export default function QuoteListClient({ initialQuotes, totalQuotes }: Props) {
                     className="text-primary-500 cursor-pointer hover:text-primary-600"
                     onClick={() => handleTelecharger(q)}
                   />
-                </div>
               </div>
             </div>
           ))
@@ -130,8 +128,8 @@ export default function QuoteListClient({ initialQuotes, totalQuotes }: Props) {
 
       {/* Voir plus */}
       {hasMore && (
-        <div className="flex justify-center mt-2">
-          <button onClick={handleVoirPlus} disabled={loadingMore}>
+        <div className="flex justify-center mt-2 text-primary-500">
+          <button onClick={handleVoirPlus} disabled={loadingMore} className="underline cursor-pointer">
             {loadingMore ? "Chargement..." : `Voir plus`}
           </button>
         </div>
