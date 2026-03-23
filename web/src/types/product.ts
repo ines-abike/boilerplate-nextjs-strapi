@@ -1,8 +1,10 @@
-export interface Product {
-  id: string;
+import { StrapiEntity } from "./strapi";
+
+export interface Product extends Partial<Omit<StrapiEntity, "documentId">> {
+  documentId: string;
   name: string;
   unitPrice: number;
-  category?: string;
   vat: number;
+  category?: string;
   quantity?: number;
 }

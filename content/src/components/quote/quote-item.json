@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_quote_quote_items",
+  "info": {
+    "displayName": "QuoteItem"
+  },
+  "options": {},
+  "attributes": {
+    "unitPrice": {
+      "type": "decimal",
+      "required": true
+    },
+    "vat": {
+      "type": "integer",
+      "required": true,
+      "default": 20
+    },
+    "quantity": {
+      "type": "integer",
+      "required": true,
+      "default": 1
+    },
+    "productName": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}

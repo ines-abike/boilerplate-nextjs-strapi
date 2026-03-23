@@ -1,44 +1,70 @@
 [
   {
-    "id": "1",
+    "id": 1,
+    "documentId": "DEV-2024-12-003",
+    "createdAt": "2025-02-28T00:00:00.000Z",
+    "updatedAt": "2025-02-28T00:00:00.000Z",
+    "publishedAt": "2025-02-28T00:00:00.000Z",
     "reference": "DEV-2024-12-003",
-    "createdAt": "28/02/2025",
-    "clientInfo": {
-      "clientType": "entreprise",
-      "firstName": "Jean",
-      "lastName": "Béta",
-      "phone": "+33 6 12 34 56 78",
-      "email": "jean.beta@email.com",
-      "companyName": "Beta Corp",
-      "vatNumber": "FR12345678901",
-      "siretNumber": "12345678900012",
-      "address": "12 Rue de la Paix, 75001 Paris",
-      "eventName": "Soirée Prestige"
-    },
-    "products": [
-      { "id": "p1", "name": "Charles Heidsieck brut réserve", "quantity": 2, "unitPrice": 54, "vat": 20 },
-      { "id": "p2", "name": "Hennessy XO", "quantity": 1, "unitPrice": 45, "vat": 20 }
+    "clientType": "entreprise",
+    "firstName": "Jean",
+    "lastName": "Béta",
+    "phone": "+33 6 12 34 56 78",
+    "email": "jean.beta@email.com",
+    "adress": "12 Rue de la Paix, 75001 Paris",
+    "eventName": "Soirée Prestige",
+    "companyName": "Beta Corp",
+    "vatNumber": "FR12345678901",
+    "siretNumber": "12345678900012",
+    "items": [
+      {
+        "id": 1,
+        "productName": "Charles Heidsieck brut réserve",
+        "quantity": 2,
+        "unitPrice": 54,
+        "vat": 20
+      },
+      {
+        "id": 2,
+        "productName": "Hennessy XO",
+        "quantity": 1,
+        "unitPrice": 45,
+        "vat": 20
+      }
     ]
   },
   {
-    "id": "2",
+    "id": 2,
+    "documentId": "DEV-2024-12-004",
+    "createdAt": "2025-04-10T00:00:00.000Z",
+    "updatedAt": "2025-04-10T00:00:00.000Z",
+    "publishedAt": "2025-04-10T00:00:00.000Z",
     "reference": "DEV-2024-12-004",
-    "createdAt": "10/04/2025",
-    "clientInfo": {
-      "clientType": "particulier",
-      "firstName": "Sophie",
-      "lastName": "Gamma",
-      "phone": "+33 6 98 76 54 32",
-      "email": "sophie.gamma@email.com",
-      "companyName": "",
-      "vatNumber": "",
-      "siretNumber": "",
-      "address": "8 Avenue Montaigne, 75008 Paris",
-      "eventName": "Cocktail Dînatoire"
-    },
-    "products": [
-      { "id": "p3", "name": "Mojito signature", "quantity": 10, "unitPrice": 18, "vat": 20 },
-      { "id": "p4", "name": "Spritz L'Heritage", "quantity": 8, "unitPrice": 16, "vat": 20 }
+    "clientType": "particulier",
+    "firstName": "Sophie",
+    "lastName": "Gamma",
+    "phone": "+33 6 98 76 54 32",
+    "email": "sophie.gamma@email.com",
+    "adress": "8 Avenue Montaigne, 75008 Paris",
+    "eventName": "Cocktail Dînatoire",
+    "companyName": null,
+    "vatNumber": null,
+    "siretNumber": null,
+    "items": [
+      {
+        "id": 1,
+        "productName": "Mojito signature",
+        "quantity": 10,
+        "unitPrice": 18,
+        "vat": 20
+      },
+      {
+        "id": 2,
+        "productName": "Spritz L'Heritage",
+        "quantity": 8,
+        "unitPrice": 16,
+        "vat": 20
+      }
     ]
   }
 ]

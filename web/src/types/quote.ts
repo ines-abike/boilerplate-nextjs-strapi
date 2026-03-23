@@ -1,9 +1,33 @@
 import { Product } from "./product";
-
+import { StrapiEntity } from "./strapi";
 
 export type ClientType = "particulier" | "entreprise";
 
-export interface ClientInfo {
+export interface QuoteItem {
+  productName: string;
+  unitPrice: number;
+  vat: number;
+  quantity: number;
+}
+
+export interface Quote extends StrapiEntity {
+  reference: string;
+  clientType: ClientType;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  adress: string; // orthographe Strapi
+  eventName: string;
+  companyName: string | null;
+  vatNumber: string | null;
+  siretNumber: string | null;
+  items: QuoteItem[];
+}
+
+export interface QuoteFormState {
+  step: number;
+  id: string;
   clientType: ClientType;
   firstName: string;
   lastName: string;
@@ -14,16 +38,7 @@ export interface ClientInfo {
   siretNumber: string;
   address: string;
   eventName: string;
-}
-
-export interface Quote {
-  id: string;
+  products: Product[];
   reference: string;
   createdAt: string;
-  clientInfo: ClientInfo;
-  products: Product[];
-}
-
-export interface QuoteFormState extends Quote {
-  step: number;
 }

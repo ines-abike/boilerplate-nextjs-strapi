@@ -1,19 +1,6 @@
 import { Product } from "../types/product";
-import { ClientInfo, QuoteFormState } from "../types/quote";
- 
-const defaultClientInfo: ClientInfo = {
-   clientType: "entreprise",
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    companyName: "",
-    vatNumber: "",
-    siretNumber: "",
-    address: "",
-    eventName: "",
-};
- 
+import {QuoteFormState } from "../types/quote";
+
 function createReferenceAndDate() {
   const now = new Date();
   const createdAt = now.toLocaleDateString("fr-FR", {
@@ -34,7 +21,16 @@ const { id, reference, createdAt } = createReferenceAndDate();
 export const initialState: QuoteFormState = {
   step: 1,
   id,
-  clientInfo: defaultClientInfo,
+  clientType: "entreprise",
+  firstName: "",
+  lastName: "",
+  phone: "",
+  email: "",
+  companyName: "",
+  vatNumber: "",
+  siretNumber: "",
+  address: "",
+  eventName: "",
   products: [],
   reference,
   createdAt,
@@ -42,48 +38,54 @@ export const initialState: QuoteFormState = {
 
 export type Action =
   | { type: "SET_STEP"; payload: number }
-  | { type: "SET_CLIENT_INFO"; payload: Partial<ClientInfo> }
+  | { type: "SET_CLIENT_INFO"; payload: Partial<QuoteFormState> }
   | { type: "ADD_PRODUIT"; payload: Product }
   | { type: "REMOVE_PRODUIT"; payload: string }
-  | { type: "UPDATE_PRODUIT"; payload: { id: string; changes: Partial<Product> } }
+  | {
+      type: "UPDATE_PRODUIT";
+      payload: { id: string; changes: Partial<Product> };
+    }
   | { type: "RESET" };
- 
-export function devisFormReducer(state: QuoteFormState, action: Action): QuoteFormState {
+
+export function devisFormReducer(
+  state: QuoteFormState,
+  action: Action,
+): QuoteFormState {
   switch (action.type) {
     case "SET_STEP":
       return { ...state, step: action.payload };
- 
+
     case "SET_CLIENT_INFO":
       return {
         ...state,
-        clientInfo: { ...state.clientInfo, ...action.payload },
+        ...action.payload,
       };
- 
+
     case "ADD_PRODUIT":
       return { ...state, products: [...state.products, action.payload] };
- 
+
     case "REMOVE_PRODUIT":
       return {
         ...state,
-        products: state.products.filter((p: Product) => p.id !== action.payload),
+        products: state.products.filter(
+          (p: Product) => p.documentId !== action.payload,
+        ),
       };
- 
+
     case "UPDATE_PRODUIT":
       return {
         ...state,
         products: state.products.map((p: Product) =>
-          p.id === action.payload.id
+          p.documentId === action.payload.id
             ? { ...p, ...action.payload.changes }
-            : p
+            : p,
         ),
       };
- 
+
     case "RESET":
       return { ...initialState, ...createReferenceAndDate() };
- 
+
     default:
       return state;
   }
 }
-
-

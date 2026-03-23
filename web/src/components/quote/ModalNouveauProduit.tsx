@@ -19,7 +19,7 @@ export default function ModalNouveauProduit({ isOpen, onClose }: Props) {
   const handleCreer = () => {
     if (!nomProduit.trim()) return;
     const newProduit: Product = {
-      id: `custom-${customProduitIdSeq.current++}`,
+      documentId: `custom-${customProduitIdSeq.current++}`,
       name: nomProduit,
       quantity: 1,
       unitPrice: 0,
