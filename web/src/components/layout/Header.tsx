@@ -33,7 +33,7 @@ export default function Header() {
           <MenuItem
             as="button"
             className={({ active }) =>
-              `flex items-center gap-2 w-full px-4 py-2 text-sm text-black-400 ${active ? "bg-gray-50" : ""}`
+              `flex items-center text-nowrap gap-2 w-full px-4 py-2 text-sm text-black-400 ${active ? "bg-gray-50" : ""}`
             }
           >
             <FiKey size={14} />

@@ -12,40 +12,33 @@ export default function Step2Produits() {
   const { state, dispatch } = useQuoteForm();
   const { products } = state;
 
-  // --- State local ---
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [openCategories, setOpenCategories] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // --- Chargement des catégories depuis Strapi ---
   useEffect(() => {
     getCategories()
       .then((data) => {
         setCategories(data);
-        // Ouvre la première catégorie par défaut
         if (data.length > 0) setOpenCategories([data[0].documentId]);
       })
       .finally(() => setLoading(false));
   }, []);
 
-  // --- Toggle ouverture/fermeture d'une catégorie ---
   const toggleCategorie = (id: string) => {
     setOpenCategories((prev) =>
       prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
     );
   };
 
-  // --- Ajout d'un produit du menu au panier ---
-  // documentId Strapi = identifiant unique, pas besoin d'en générer un
-  // On snapshot les données (prix, vat) au moment de l'ajout
   const handleAddProduit = (produit: Product) => {
     dispatch({
       type: "ADD_PRODUIT",
       payload: {
-        ...produit,  // snapshot : prix et vat figés à cet instant
-        quantity: 1, // quantité par défaut
+        ...produit, 
+        quantity: 1, 
       },
     });
   };
@@ -58,7 +51,6 @@ export default function Step2Produits() {
         p.name.toLowerCase().includes(search.toLowerCase())
       ),
     }))
-    // N'affiche que les catégories ayant des résultats
     .filter((cat) => cat.products && cat.products.length > 0);
 
   // --- Total du panier TTC ---
@@ -138,7 +130,6 @@ export default function Step2Produits() {
                   {isOpen && (
                     <div className="flex flex-col gap-2 mt-1">
                       {cat.products?.map((product: Product) => {
-                        // Vérifie si ce produit est déjà dans le panier
                         const isAlreadyAdded = products.some(
                           (p) => p.documentId === product.documentId
                         );
@@ -189,7 +180,7 @@ export default function Step2Produits() {
           ) : (
             <div className="flex flex-col gap-4">
               {products.map((p) => {
-                // Total TTC de la ligne
+            
                 const totalLigne = p.unitPrice * (p.quantity || 1) * (1 + p.vat / 100);
 
                 return (
