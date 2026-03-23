@@ -1,14 +1,12 @@
-
 import { useQuoteForm } from "@/src/context/QuoteFormContext";
 import { ClientType } from "@/src/types/quote";
 import Input from "@/src/components/ui/Input";
 
 export default function Step1ClientInfo() {
   const { state, dispatch } = useQuoteForm();
-  const { clientInfo } = state;
-  const isEntreprise = clientInfo.clientType === "entreprise";
+  const isEntreprise = state.clientType === "entreprise";
 
-  const setField = (payload: Partial<typeof clientInfo>) => {
+  const setField = (payload: Partial<typeof state>) => {
     dispatch({ type: "SET_CLIENT_INFO", payload });
   };
 
@@ -30,9 +28,9 @@ export default function Step1ClientInfo() {
             >
               <div
                 className={`w-4 h-4 rounded-full border-2 flex items-center justify-center
-                  ${clientInfo.clientType === type ? "border-primary-500" : "border-black-100"}`}
+                  ${state.clientType === type ? "border-primary-500" : "border-black-100"}`}
               >
-                {clientInfo.clientType === type && (
+                {state.clientType === type && (
                   <div className="w-2 h-2 rounded-full bg-primary-500" />
                 )}
               </div>
@@ -44,15 +42,15 @@ export default function Step1ClientInfo() {
         {/* Nom / Prénom */}
         <div className="grid grid-cols-2 gap-3 mb-3">
           <Input
-          type="text"
+            type="text"
             placeholder="Nom du client"
-            value={clientInfo.lastName}
+            value={state.lastName}
             onChange={(e) => setField({ lastName: e.target.value })}
           />
           <Input
             type="text"
             placeholder="Prénom du client"
-            value={clientInfo.firstName}
+            value={state.firstName}
             onChange={(e) => setField({ firstName: e.target.value })}
           />
         </div>
@@ -62,13 +60,13 @@ export default function Step1ClientInfo() {
           <Input
             type="tel"
             placeholder="Numéro de téléphone"
-            value={clientInfo.phone}
+            value={state.phone}
             onChange={(e) => setField({ phone: e.target.value })}
           />
           <Input
             placeholder="Email"
             type="email"
-            value={clientInfo.email}
+            value={state.email}
             onChange={(e) => setField({ email: e.target.value })}
           />
         </div>
@@ -80,13 +78,13 @@ export default function Step1ClientInfo() {
               <Input
                 type="text"
                 placeholder="Nom de l'entreprise"
-                value={clientInfo.companyName}
+                value={state.companyName}
                 onChange={(e) => setField({ companyName: e.target.value })}
               />
               <Input
                 type="text"
                 placeholder="N° TVA Intracommunautaire"
-                value={clientInfo.vatNumber}
+                value={state.vatNumber}
                 onChange={(e) => setField({ vatNumber: e.target.value })}
               />
             </div>
@@ -94,7 +92,7 @@ export default function Step1ClientInfo() {
               <Input
                 type="text"
                 placeholder="Numéro siret"
-                value={clientInfo.siretNumber}
+                value={state.siretNumber}
                 onChange={(e) => setField({ siretNumber: e.target.value })}
               />
             </div>
@@ -106,7 +104,7 @@ export default function Step1ClientInfo() {
           <textarea
             placeholder="Adresse"
             rows={3}
-            value={clientInfo.address}
+            value={state.address}
             onChange={(e) => setField({ address: e.target.value })}
             className="w-full px-3 py-2 text-sm border border-gray-100 rounded-md text-black-400 placeholder:text-black-200 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-shadow resize-none"
           />
@@ -117,7 +115,7 @@ export default function Step1ClientInfo() {
         <Input
           type="text"
           placeholder="Nom de l'événement"
-          value={clientInfo.eventName}
+          value={state.eventName}
           onChange={(e) => setField({ eventName: e.target.value })}
         />
       </div>
