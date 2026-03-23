@@ -1,15 +1,19 @@
 # Heritage 105 — Quote Generator
-Quote management app for the restaurant L'Héritage 105, allowing creation, viewing, and PDF export of quotes, with a product catalog managed via Strapi CMS.
+
+A quote management application for the **L'Héritage 105** restaurant. Create, browse, and export quotes as PDF, with a product catalog managed through a Strapi CMS.
 
 ## Tech Stack
-Frontend: Next.js 16, React 19, TypeScript, Tailwind CSS 4
-Backend/CMS: Strapi 5 (SQLite default)
-Validation: Zod + React Hook Form
-PDF generation: jsPDF + html2canvas
-Runtime: Node 20+, Yarn (Corepack)
-Dev containers: Docker Compose
+
+- **Frontend** : Next.js 16, React 19, TypeScript, Tailwind CSS 4
+- **Backend/CMS** : Strapi 5 (SQLite by default)
+- **Validation** : Zod + React Hook Form
+- **PDF** : jsPDF + html2canvas
+- **Runtime** : Node 20+, Yarn (Corepack)
+- **Dev containers** : Docker Compose
 
 ## Project Structure
+
+```
 boilerplate-nextjs-strapi/
 ├── content/          # Strapi v5 (API & Admin)
 │   ├── config/       # Strapi config (db, server, plugins…)
@@ -20,7 +24,7 @@ boilerplate-nextjs-strapi/
 │   │   ├── app/              # Pages (App Router)
 │   │   ├── components/       # UI & business components
 │   │   ├── context/          # QuoteFormContext (useReducer)
-│   │   ├── reducers/         # QuoteFormReducer
+│   │   ├── reducers/         # DevisFormReducer
 │   │   ├── schemas/          # Zod validation schemas
 │   │   ├── services/         # Strapi API calls
 │   │   ├── types/            # TypeScript types
@@ -28,82 +32,98 @@ boilerplate-nextjs-strapi/
 │   └── Dockerfile.dev
 ├── docker-compose.yml
 └── README.md
+```
 
-### Strapi Data Model
-Collections
-Collection	Main Fields
-Category	name, slug, relation products (oneToMany)
-Product	name, unitPrice, vat, relation category (manyToOne)
-Quote	Client info, clientType (enum), items (repeatable component)
-Component QuoteItem
+## Data Model
 
-Stores a snapshot of products at quote creation: productName, unitPrice, vat, quantity.
-Prevents later price changes from affecting existing quotes.
+### Collections
+
+| Collection | Key fields |
+|------------|------------|
+| `Category` | `name`, `slug`, `products` relation (oneToMany) |
+| `Product`  | `name`, `unitPrice`, `vat`, `category` relation (manyToOne) |
+| `Quote`    | Client info, `clientType` (enum), `items` (repeatable component) |
+
+### `QuoteItem` Component
+
+Stores a **snapshot** of products at the time the quote is created: `productName`, `unitPrice`, `vat`, `quantity`. This pattern prevents price changes from corrupting existing quotes.
 
 ## Quick Start (Docker)
-### From project root
+
+```bash
+# From the project root
 docker compose up --build
-Frontend: http://localhost:3000
-Strapi Admin: http://localhost:1337/admin
- (create admin on first visit)
- 
-### Start Without Docker
+```
+
+- Frontend: http://localhost:3000
+- Strapi Admin: http://localhost:1337/admin _(create an admin user on first visit)_
+
+## Quick Start (without Docker)
 
 Two terminals required.
 
-Strapi (content/)
-
+**Strapi (`content/`)**
+```bash
 cd content
 corepack enable
 yarn install
 yarn develop
+```
 
-Next.js (web/)
-
+**Next.js (`web/`)**
+```bash
 cd web
 corepack enable
 yarn install
 yarn dev
+```
 
 ## Environment Variables
 
-web/.env.local
-
+**`web/.env.local`**
+```bash
 NEXT_PUBLIC_API_URL=http://localhost:1337
 NEXT_PUBLIC_STRAPI_API_TOKEN=<your_token>
+```
 
-Token: Strapi → Settings → API Tokens → Full access.
+> Generate the token in Strapi → Settings → API Tokens → Full access.
 
-content/ (preconfigured for dev in docker-compose.yml)
-
+**`content/`** _(pre-configured in `docker-compose.yml` for local dev)_
+```
 APP_KEYS, API_TOKEN_SALT, ADMIN_JWT_SECRET, TRANSFER_TOKEN_SALT
 DATABASE_CLIENT=sqlite
+```
 
 ## Features
-3-step quote creation: client info → product selection → preview
-Form validation: Zod + React Hook Form, conditional fields for client type
-Product catalog: loaded from Strapi with accordion by category, live search
-Save + PDF export: quote saved in Strapi, downloadable as PDF
-Quote list: server-side pagination, search, detail modal, PDF download
-Product snapshot: prices frozen at quote creation
 
-## Notable Points
-HomePage is a Server Component fetching quotes; interactive list is in QuoteListClient
-QuoteTemplate accepts a Strapi Quote or local QuoteFormState (preview)
-adress field in Strapi contains a typo — fix in migration
+- **3-step quote creation**: client info → product selection → preview
+- **Form validation**: Zod + React Hook Form, conditional fields based on client type (individual / company)
+- **Product catalog**: fetched from Strapi with category accordion and real-time search
+- **Save + PDF export**: quote is saved to Strapi then exported as PDF on click
+- **Quote list**: server-side pagination, search, detail modal, PDF download
+- **Product snapshot**: prices are locked at the time of quote creation
 
-## Useful Scripts
-### Docker
+## Notable Implementation Details
+
+- `HomePage` is a **Server Component** that fetches quotes directly; the interactive list is extracted into `QuoteListClient`
+- `QuoteTemplate` accepts two sources: a Strapi `Quote` or a local `QuoteFormState` (for preview)
+- The `adress` field in Strapi has a typo (single `d`) — to be fixed in a follow-up migration
+
+## Useful Commands
+
+```bash
+# Docker
 docker compose up           # Start
-docker compose up --build   # Rebuild + start
+docker compose up --build   # Rebuild and start
 docker compose down         # Stop
-docker compose down -v      # Stop + remove volumes
+docker compose down -v      # Stop and remove volumes
 
-### Next.js
-yarn dev      # Development
+# Next.js
+yarn dev      # Development server
 yarn build    # Production build
 yarn lint     # Lint
 
-### Strapi
-yarn develop  # Development
+# Strapi
+yarn develop  # Development server
 yarn build    # Production build
+```
