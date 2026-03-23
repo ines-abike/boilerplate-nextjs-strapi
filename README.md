@@ -107,4 +107,3 @@ yarn lint     # Lint
 ### Strapi
 yarn develop  # Development
 yarn build    # Production build
-🏭 Production
